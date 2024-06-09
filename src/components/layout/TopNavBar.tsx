@@ -10,9 +10,9 @@ const TopNavBar: React.FC = () => {
 
     return (
         <div>
-            <Navbar collapseOnSelect className="bg-primary"  expand="sm">
+            <Navbar collapseOnSelect className="navbar-pastel-orange"  expand="sm">
                 <Container>
-                    <Navbar.Brand role="button" onClick={() => navigate('/')} >
+                    <Navbar.Brand role="button" onClick={() => navigate('/')} className="text-white">
                         <img
                             alt=""
                             src={logo}
@@ -23,7 +23,7 @@ const TopNavBar: React.FC = () => {
                         ShopXPress
                     </Navbar.Brand>
                     <Navbar.Toggle />
-                    <Navbar.Collapse className="justify-content-end">
+                    <Navbar.Collapse className="justify-content-end text-white" >
                         {
                             isAuthenticated ? <NavDropdown title="Login as XXX" id="basic-nav-dropdown">
                                 {/* <NavDropdown.Divider /> */}
