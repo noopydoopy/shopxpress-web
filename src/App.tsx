@@ -4,9 +4,7 @@ import './scss/main.scss';
 import AdminRoute from './routers/AdminRoute';
 import UserRoute from './routers/UserRoute';
 
-
 const App = () => {
-
   return (
     <BrowserRouter>
       <AuthProvider>
@@ -17,7 +15,7 @@ const App = () => {
         </Routes>
       </AuthProvider>
     </BrowserRouter>
-  )
-}
+  );
+};
 
 export default App;
