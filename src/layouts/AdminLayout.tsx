@@ -1,12 +1,13 @@
-import { FC } from "react";
+
 import TopNavBar from "../components/layout/TopNavBar";
 import { Container } from "react-bootstrap";
 import { Outlet } from "react-router-dom";
 
-const MainLayout: FC= () => {
+const AdminLayout = () => {
     return (
         <div>
             <TopNavBar />
+            <h1>Admin Layout</h1>
             <Container>
                 <Outlet />
             </Container>
@@ -14,4 +15,4 @@ const MainLayout: FC= () => {
     );
 }
 
-export default MainLayout;
+export default AdminLayout;
