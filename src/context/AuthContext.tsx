@@ -1,5 +1,6 @@
 // src/context/AuthContext.tsx
 import React, { createContext, useContext, useState, ReactNode, useEffect, useRef } from 'react';
+import authHelper from '../helpers/authHelper';
 
 interface AuthContextProps {
   isAuthenticated: boolean;
@@ -15,6 +16,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const login = () => {
     console.log('Login is called');
+    authHelper.setAuth({ token : 'token', email : 'email'});
     setIsAuthenticated(true);
   };
   const logout = () => {
@@ -31,8 +33,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const validateUser = async () => {
       try {
         if (!didRequest.current) {
-          // Verify that user has been login.
-          console.log('Will get and retrieve user data.');
+          if (!authHelper.get()) {
+            logout();
+          } else {
+            // Call get uer profile
+
+            // Verify that user has been login.
+            console.log('Will get and retrieve user data.');
+          }
         }
       } catch (error) {
         console.error(error);

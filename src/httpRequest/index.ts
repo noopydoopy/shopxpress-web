@@ -6,6 +6,7 @@ import axios, {
   InternalAxiosRequestConfig
 } from 'axios';
 import qs from 'qs';
+import authHelper from '../helpers/authHelper';
 
 export interface IAppErrorResponse {
   message: string;
@@ -34,7 +35,7 @@ export class HttpRequest {
 
     this.axiosInstance.interceptors.request.use(
       (request: InternalAxiosRequestConfig) => {
-        const apiToken = null;
+        const apiToken = authHelper.get();
         // Attach token for the request.
         if (request.headers && apiToken) {
           request.headers['Authorization'] = 'Bearer ' + apiToken;

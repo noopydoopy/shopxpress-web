@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import TopNavBar from '../components/layout/TopNavBar';
-import { Container } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import { Outlet } from 'react-router-dom';
 
 const MainLayout: FC = () => {
@@ -10,6 +10,15 @@ const MainLayout: FC = () => {
       <Container>
         <Outlet />
       </Container>
+      <footer className='w-100 position-absolute bg-white p-4'>
+        <Container>
+          <Row>
+            <Col>
+              <p>&copy; 2024 ShopXPress. All rights reserved.</p>
+            </Col>
+          </Row>
+        </Container>
+      </footer>
     </div>
   );
 };
