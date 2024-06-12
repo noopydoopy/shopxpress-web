@@ -1,6 +1,9 @@
 // src/context/AuthContext.tsx
 import React, { createContext, useContext, useState, ReactNode, useEffect, useRef } from 'react';
 import authHelper from '../helpers/authHelper';
+import authService from '../services/auth.service';
+import httpRequest from '../httpRequest';
+import axios from 'axios';
 
 interface AuthContextProps {
   isAuthenticated: boolean;
@@ -16,7 +19,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const login = () => {
     console.log('Login is called');
-    authHelper.setAuth({ token : 'token', email : 'email'});
+    authHelper.setAuth({ token: 'token', email: 'email' });
     setIsAuthenticated(true);
   };
   const logout = () => {
@@ -29,18 +32,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }, [isAuthenticated]);
 
   useEffect(() => {
-    console.log('');
+    console.log('Init Auth Context.')
     const validateUser = async () => {
       try {
+        console.log(didRequest.current)
         if (!didRequest.current) {
-          if (!authHelper.get()) {
-            logout();
-          } else {
-            // Call get uer profile
-
-            // Verify that user has been login.
-            console.log('Will get and retrieve user data.');
-          }
+          console.log('Will get and retrieve user data.');
         }
       } catch (error) {
         console.error(error);
@@ -49,9 +46,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
         console.log('Display error page');
       }
-      return () => (didRequest.current = true);
     };
+
     validateUser();
+    return () => {
+      didRequest.current = true
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
