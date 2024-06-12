@@ -5,6 +5,7 @@ import PrivateRoute from './PrivateRoute';
 import LoginPage from '../pages/Login/LoginPage';
 import HomePage from '../pages/Home/HomePage';
 import ProductPage from '../pages/Product/ProductPage';
+import CartPage from '../pages/Cart/CartPage';
 
 const UserRoute: FC = () => {
   return (
@@ -13,9 +14,8 @@ const UserRoute: FC = () => {
         <Route index element={<HomePage />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/products/*' element={<ProductPage />} />
-        {/* <Route path='/products/:id' element={<>Product Detail</>} /> */}
         <Route element={<PrivateRoute />}>
-          <Route path='/carts' element={<>Carts</>} />
+        <Route path='/cart' element={<CartPage />} />
           <Route path='/checkout' element={<>Checkout</>} />
         </Route>
         <Route path='*' element={<Navigate to='/error/404' />} />

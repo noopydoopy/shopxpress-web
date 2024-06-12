@@ -10,7 +10,7 @@ const MainLayout: FC = () => {
       <Container>
         <Outlet />
       </Container>
-      <footer className='w-100 position-absolute bg-white p-4'>
+      <footer className='w-100 position-absolute bg-white p-4 mt-4'>
         <Container>
           <Row>
             <Col>

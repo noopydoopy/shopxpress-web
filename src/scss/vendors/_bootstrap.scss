@@ -1,3 +1,6 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
 // Override them colors.
 // Define your custom theme colors
 $theme-colors: ("primary": #ee4d2d, // Orange Pastel
@@ -13,6 +16,9 @@ $theme-colors: ("primary": #ee4d2d, // Orange Pastel
 // Optionally, override other Bootstrap variables as needed
 $body-bg: #f0f2f5;
 $body-color: #333;
+
+// Override Bootstrap variables
+$primary: #ffffff !important;
 
 // Custom Navbar background color
 .navbar-pastel-orange {

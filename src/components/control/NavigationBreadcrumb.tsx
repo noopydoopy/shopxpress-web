@@ -17,7 +17,7 @@ const NavigationBreadcrumb = (props: NavigationBreadcrumbProps) => {
         <Breadcrumb className="mt-3">
             {
                 pageLinks.map((p, i) => {
-                    return <Breadcrumb.Item linkAs={Link} linkProps={{ to: p.to }} active={p.active}>{p.title}</Breadcrumb.Item>
+                    return <Breadcrumb.Item key={i} linkAs={Link} linkProps={{ to: p.to }} active={p.active}>{p.title}</Breadcrumb.Item>
                 })
             }
         </Breadcrumb>

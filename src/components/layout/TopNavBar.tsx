@@ -1,8 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { Container, Nav, NavDropdown, Navbar } from 'react-bootstrap';
+import { Badge, Button, Container, Nav, NavDropdown, Navbar } from 'react-bootstrap';
 import logo from '../../logo.svg';
 import { PublicRoutes } from '../../constants/ApplicationRoutes';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 
 const TopNavBar: React.FC = () => {
   const { isAuthenticated, logout } = useAuth();
@@ -18,6 +20,17 @@ const TopNavBar: React.FC = () => {
           </Navbar.Brand>
           <Navbar.Toggle />
           <Navbar.Collapse className='justify-content-end text-white'>
+            <Nav.Link onClick={() => navigate('/cart')}>
+              <Button variant='outline-link' className='position-relative'><FontAwesomeIcon icon={faCartShopping} color='white' />
+                <Badge
+                  pill
+                  bg="warning"
+                  className="position-absolute top-0 start-100 translate-middle"
+                >
+                  0
+                </Badge>
+              </Button>
+            </Nav.Link>
             {isAuthenticated ? (
               <NavDropdown title='Login as XXX' id='basic-nav-dropdown'>
                 {/* <NavDropdown.Divider /> */}
@@ -30,8 +43,8 @@ const TopNavBar: React.FC = () => {
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (
-              <Nav>
-                <Nav.Link onClick={() => navigate(PublicRoutes.LOGIN)}>Login</Nav.Link>
+              <Nav className='align-items-center'>
+                <Nav.Link onClick={() => navigate(PublicRoutes.LOGIN)} className='text-white'>Login</Nav.Link>
               </Nav>
             )}
           </Navbar.Collapse>

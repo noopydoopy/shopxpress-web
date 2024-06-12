@@ -56,7 +56,7 @@ const HomePage = () => {
         <div className='p-3 d-flex gap-4 flex-wrap'>
           {
             [1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((id, i) =>
-              <Card style={{ width: '18rem' }} className='bg-white'>
+              <Card style={{ width: '18rem' }} className='bg-white' key={i}>
                 <Card.Img variant="top" className='object-fit-contain' as={Image} height={150} rounded
                   src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/iphone-card-40-iphone15prohero-202309_FMT_WHH?wid=508&hei=472&fmt=p-jpg&qlt=95&.v=1693086369818"
                   alt='Image 01'
@@ -85,7 +85,7 @@ const HomePage = () => {
         <div className='p-3 d-flex gap-4 flex-wrap'>
           {
             [1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((id, i) =>
-              <Card style={{ width: '18rem' }} className='bg-white'>
+              <Card style={{ width: '18rem' }} className='bg-white' key={i}>
                 <Card.Img variant="top" className='object-fit-contain' as={Image}
                   height={150} rounded
                   src=""
