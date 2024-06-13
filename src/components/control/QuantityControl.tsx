@@ -45,7 +45,7 @@ const QuantityControl: React.FC<QuantityControlProps> = ({ min, max, onChange }:
         type="number"
         value={quantity}
         onChange={handleChange}
-        style={{ textAlign: 'center', maxWidth: '60px' }}
+        style={{ textAlign: 'center', maxWidth: '80px' }}
       />
       <Button variant="outline-secondary" onClick={handleIncrease}>
         +
