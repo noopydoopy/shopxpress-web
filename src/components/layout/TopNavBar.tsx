@@ -5,9 +5,11 @@ import logo from '../../logo.svg';
 import { PublicRoutes } from '../../constants/ApplicationRoutes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { useUserCartContext } from '../../context/UserCartContext';
 
 const TopNavBar: React.FC = () => {
   const { isAuthenticated, logout, currentUser } = useAuth();
+  const { itemInCart } = useUserCartContext();
   const navigate = useNavigate();
 
   return (
@@ -27,7 +29,7 @@ const TopNavBar: React.FC = () => {
                   bg="warning"
                   className="position-absolute top-0 start-100 translate-middle"
                 >
-                  0
+                  {itemInCart}
                 </Badge>
               </Button>
             </Nav.Link>

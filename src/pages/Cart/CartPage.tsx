@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo, useState } from "react";
+import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { Badge, Card, ListGroup, Image, Button, Placeholder, Alert } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faCartShopping, faCartArrowDown } from '@fortawesome/free-solid-svg-icons';
@@ -8,9 +8,11 @@ import ConfirmDialog from "../../components/dialog/ConfirmDialog";
 import { toast } from "react-toastify";
 import NavigationBreadcrumb, { PageLink } from "../../components/control/NavigationBreadcrumb";
 import useCart from "./hooks/useCart";
+import { useUserCartContext } from "../../context/UserCartContext";
 
 const CartPage: FC = () => {
     const { userCart, loading, removeProductFromCart, checkoutCart, getUserCart } = useCart();
+    const { setItemInCart } = useUserCartContext();
     const [showConfirm, setShowConfirm] = useState<boolean>(false);
     const [selectedProductId, setSelectedProductId] = useState<number>();
     const [showRemoveConfirm, setShowRemoveConfirm] = useState<boolean>(false);
@@ -65,7 +67,11 @@ const CartPage: FC = () => {
         }
         setSelectedProductId(undefined);
         // eslint-disable-next-line
-    }, [setShowConfirm, setShowRemoveConfirm, selectedProductId, setSelectedProductId, getUserCart])
+    }, [setShowConfirm, setShowRemoveConfirm, selectedProductId, setSelectedProductId, getUserCart, checkoutCart])
+
+    useEffect(() => {
+        setItemInCart(userCart?.cartProducts?.length ?? 0)
+    }, [userCart, setItemInCart])
 
     return (
         <>
@@ -135,9 +141,13 @@ const CartPage: FC = () => {
                                 }
 
                             </Card.Body>
-                            <Card.Body className="d-flex justify-content-end">
-                                <Button variant="primary" onClick={checkOutCart} >Checkout<FontAwesomeIcon icon={faCartShopping} className="ms-2" /></Button>
-                            </Card.Body>
+                            {
+                                (userCart?.cartProducts?.length ?? 0) > 0 &&
+                                <Card.Body className="d-flex justify-content-end">
+                                    <Button variant="primary" onClick={checkOutCart} >Checkout<FontAwesomeIcon icon={faCartShopping} className="ms-2" /></Button>
+                                </Card.Body>
+                            }
+
                         </Card>
                     )
                 }

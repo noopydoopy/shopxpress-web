@@ -4,15 +4,19 @@ import { toast } from "react-toastify";
 
 import emptyImage from '../../../assets/images/emptyImage.png';
 import LabelWithData from "../../../components/control/LabelWithData";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import NavigationBreadcrumb, { PageLink } from "../../../components/control/NavigationBreadcrumb";
 import QuantityControl from "../../../components/control/QuantityControl";
 import { useAuth } from "../../../context/AuthContext";
 import useProductDetail from "../hooks/useProductDetail";
+import { useUserCartContext } from "../../../context/UserCartContext";
+import useCart from "../../Cart/hooks/useCart";
 
 const ProductDetail = () => {
     const { id } = useParams();
     const { isAuthenticated } = useAuth();
+    const { setItemInCart } = useUserCartContext();
+    const { getUserCart, userCart } = useCart(false);
     const { loading, product, addingProduct, addProductToCart } = useProductDetail(parseInt(id!));
     const [qty, setQty] = useState<number>(0);
     const pageLinks = useMemo((): Array<PageLink> => {
@@ -41,11 +45,15 @@ const ProductDetail = () => {
         if (isAuthenticated) {
             await addProductToCart(qty);
             toast.success(`Add ${qty} ${product?.name} to card`, { closeOnClick: true })
-            // TODO : Refresh cart
+            await getUserCart();
         } else {
             toast.error("Please login before add product to cart.");
         }
-    }, [qty, isAuthenticated, toast, product, addProductToCart]);
+    }, [qty, isAuthenticated, product, addProductToCart, getUserCart]);
+
+    useEffect(() => {
+        setItemInCart(userCart?.cartProducts.length ?? 0);
+    }, [setItemInCart, userCart])
 
     return (
         <>

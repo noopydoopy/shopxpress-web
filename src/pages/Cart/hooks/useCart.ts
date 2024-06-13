@@ -3,7 +3,7 @@ import CartContract from "../../../contracts/CartContract";
 import { toast } from "react-toastify";
 import cartService from "../../../services/cart.service";
 
-const useCart = () => {
+const useCart = (fetchAtStart : boolean = true) => {
     const [userCart, setUserCart] = useState<CartContract>();
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -40,8 +40,10 @@ const useCart = () => {
     }, [setLoading, setUserCart])
 
     useEffect(() => {
-        getUserCart();
-    }, [getUserCart])
+        if(fetchAtStart){
+            getUserCart();
+        }
+    }, [getUserCart, fetchAtStart])
 
     return {
         userCart,
