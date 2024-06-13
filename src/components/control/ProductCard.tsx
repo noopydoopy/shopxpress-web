@@ -16,7 +16,7 @@ const ProductCard: FC<IProductCardProps> = ({productId, productName, description
     return (
         <Card style={{ width: '18rem' }} className='bg-white'>
             <Card.Img variant="top" className='object-fit-contain' as={Image} height={150} rounded
-                src={imageUrl}
+                src={imageUrl ?? ''}
                 alt={productName}
                 onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
                     const target = e.target as HTMLImageElement;
@@ -28,7 +28,7 @@ const ProductCard: FC<IProductCardProps> = ({productId, productName, description
                     {description}
                 </Card.Text>
             </Card.Body>
-            <Card.Body className='text-end'>
+            <Card.Body className='d-flex justify-content-end align-items-end'>
                 <Link className='btn btn-outline-primary' to={`/products/${productId}`}>View</Link>
             </Card.Body>
         </Card>

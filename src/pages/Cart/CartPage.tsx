@@ -47,9 +47,8 @@ const CartPage: FC = () => {
     return (
         <>
             <NavigationBreadcrumb pageLinks={pageLinks} />
-            <h1>
-                Cart Detail
-            </h1>
+            <h3>Cart Detail</h3>
+            <hr />
             <div>
                 <Card bg="white">
                     <Card.Body>
