@@ -1,4 +1,4 @@
-import { Button, Card, Carousel, Image } from 'react-bootstrap';
+import { Carousel, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
@@ -7,11 +7,14 @@ import { useAuth } from '../../context/AuthContext';
 import Promotion1 from '../../assets/images/promotion-1.png';
 import Promotion2 from '../../assets/images/promotion-2.webp';
 import Promotion3 from '../../assets/images/promotion-3.png';
-import emptyImage from '../../assets/images/emptyImage.png'
+import ProductCard from '../../components/control/ProductCard';
+import useHomePage from './hooks/useHomepage';
 
 
 const HomePage = () => {
   const { isAuthenticated } = useAuth();
+  const { loadingNewProducts, loadingTopProducts, topSellerProducts, topNewProducts } = useHomePage();
+
   return (
     <div>
       <h1>
@@ -55,25 +58,13 @@ const HomePage = () => {
         </div>
         <div className='p-3 d-flex gap-4 flex-wrap'>
           {
-            [1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((id, i) =>
-              <Card style={{ width: '18rem' }} className='bg-white' key={i}>
-                <Card.Img variant="top" className='object-fit-contain' as={Image} height={150} rounded
-                  src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/iphone-card-40-iphone15prohero-202309_FMT_WHH?wid=508&hei=472&fmt=p-jpg&qlt=95&.v=1693086369818"
-                  alt='Image 01'
-                  onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = emptyImage;
-                  }} />
-                <Card.Body>
-                  <Card.Title>Product {i}</Card.Title>
-                  <Card.Text>
-                    Excellent Product {i}
-                  </Card.Text>
-                </Card.Body>
-                <Card.Body className='text-end'>
-                  <Link className='btn btn-outline-primary' to={`/products/${id}`}>View</Link>
-                </Card.Body>
-              </Card>)
+            loadingNewProducts ? <Spinner animation="border" /> : (
+              topSellerProducts.map((p, i) => <ProductCard key={i} productId={p.productId}
+                description={p.description}
+                productName={p.name}
+                imageUrl={'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/iphone-card-40-iphone15prohero-202309_FMT_WHH?wid=508&hei=472&fmt=p-jpg&qlt=95&.v=1693086369818'} />
+              )
+            )
           }
         </div>
       </div>
@@ -84,27 +75,13 @@ const HomePage = () => {
         </div>
         <div className='p-3 d-flex gap-4 flex-wrap'>
           {
-            [1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((id, i) =>
-              <Card style={{ width: '18rem' }} className='bg-white' key={i}>
-                <Card.Img variant="top" className='object-fit-contain' as={Image}
-                  height={150} rounded
-                  src=""
-                  alt='Image 01'
-                  onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = emptyImage;
-                  }} />
-                <Card.Body>
-                  <Card.Title>Product {i}</Card.Title>
-                  <Card.Text>
-                    Excellent Product {i}
-                  </Card.Text>
-
-                </Card.Body>
-                <Card.Body className='text-end'>
-                <Link className='btn btn-outline-primary' to={`/products/${id}`}>View</Link>
-                </Card.Body>
-              </Card>)
+            loadingTopProducts ? <Spinner animation="border" /> : (
+              topNewProducts.map((p, i) => <ProductCard key={i} productId={p.productId}
+                description={p.description}
+                productName={p.name}
+                imageUrl={''} />
+              )
+            )
           }
         </div>
       </div>
