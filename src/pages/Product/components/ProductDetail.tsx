@@ -1,4 +1,4 @@
-import { Card, Col, Row, Image, Container, Button, Placeholder } from "react-bootstrap";
+import { Card, Col, Row, Image, Container, Button, Placeholder, Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -13,7 +13,7 @@ import useProductDetail from "../hooks/useProductDetail";
 const ProductDetail = () => {
     const { id } = useParams();
     const { isAuthenticated } = useAuth();
-    const { loading, product } = useProductDetail(parseInt(id!));
+    const { loading, product, addingProduct, addProductToCart } = useProductDetail(parseInt(id!));
     const [qty, setQty] = useState<number>(0);
     const pageLinks = useMemo((): Array<PageLink> => {
         return [
@@ -37,13 +37,15 @@ const ProductDetail = () => {
         setQty(qty);
     }, [setQty])
 
-    const addProductToCart = useCallback(() => {
+    const addToCart = useCallback(async () => {
         if (isAuthenticated) {
+            await addProductToCart(qty);
             toast.success(`Add ${qty} ${product?.name} to card`, { closeOnClick: true })
+            // TODO : Refresh cart
         } else {
             toast.error("Please login before add product to cart.");
         }
-    }, [qty, isAuthenticated, toast]);
+    }, [qty, isAuthenticated, toast, product, addProductToCart]);
 
     return (
         <>
@@ -94,7 +96,14 @@ const ProductDetail = () => {
                             </Card.Body>
                             <Card.Body className="d-flex justify-content-end">
                                 <QuantityControl min={0} max={product?.inStock ?? 0} onChange={quantityChange} />
-                                <Button variant="outline-primary ms-2" disabled={qty < 1} onClick={addProductToCart}>Add To Card</Button>
+                                <Button variant="outline-primary ms-2" disabled={qty < 1 || addingProduct} onClick={addToCart}>{addingProduct ?
+                                    <Spinner
+                                        as="span"
+                                        animation="border"
+                                        size="sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                    /> : 'Add To Cart'}</Button>
                             </Card.Body>
                         </Card>
                     )

@@ -1,11 +1,20 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ProductContract from "../../../contracts/ProductContract";
 import productService from "../../../services/product.service";
 import { toast } from "react-toastify";
+import cartService from "../../../services/cart.service";
 
 const useProductDetail = (productId: number) => {
     const [product, setProduct] = useState<ProductContract>();
     const [loading, setLoading] = useState<boolean>(false);
+    const [addingProduct, setAddingProduct] = useState<boolean>(false);
+    const addProductToCart = useCallback(async (quantity: number) => {
+        if (product && quantity > 0) {
+            setAddingProduct(true);
+            await cartService.addProductToCart(product.productId, quantity);
+            setAddingProduct(false);
+        }
+    }, [product, setAddingProduct])
 
 
     if (!productId)
@@ -29,7 +38,9 @@ const useProductDetail = (productId: number) => {
 
     return {
         loading,
-        product
+        product,
+        addingProduct,
+        addProductToCart
     }
 
 }
