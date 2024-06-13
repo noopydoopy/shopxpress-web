@@ -34,7 +34,7 @@ const useProductDetail = (productId: number) => {
         }
 
         fetchProduct();
-    }, [toast, productId]);
+    }, [productId, setProduct, setLoading]);
 
     return {
         loading,

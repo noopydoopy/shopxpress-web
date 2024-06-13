@@ -16,6 +16,7 @@ export interface IAppErrorResponse {
 }
 
 const BASE_API = process.env.REACT_APP_BASE_API ?? '';
+// eslint-disable-next-line
 const excludeUrls = [];
 export class HttpRequest {
   axiosInstance: AxiosInstance;

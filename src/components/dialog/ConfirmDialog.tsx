@@ -24,7 +24,7 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
       <Modal.Header closeButton>
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>{message}</Modal.Body>
+      <Modal.Body className='text-center'>{message}</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onHide}>
           {cancelText}
