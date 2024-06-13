@@ -1,30 +1,50 @@
 // src/context/AuthContext.tsx
-import React, { createContext, useContext, useState, ReactNode, useEffect, useRef } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect, useRef, useMemo } from 'react';
 import authHelper from '../helpers/authHelper';
 import authService from '../services/auth.service';
-import httpRequest from '../httpRequest';
-import axios from 'axios';
+import userService from '../services/user.service';
+import UserProfileContract from '../contracts/UserProfileContract';
+import { Spinner } from 'react-bootstrap';
 
 interface AuthContextProps {
   isAuthenticated: boolean;
-  login: () => void;
+  login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
+  currentUser?: UserProfileContract
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const didRequest = useRef(false);
 
-  const login = () => {
+  const [currentUser, setCurrentUser] = useState<UserProfileContract>();
+  const [loading, setLoading] = useState<boolean>(true);
+  const didRequest = useRef(false);
+  const isAuthenticated = useMemo(() => {
+    return currentUser !== undefined;
+  }, [currentUser])
+
+  const login = async (email: string, password: string) => {
     console.log('Login is called');
-    authHelper.setAuth({ token: 'token', email: 'email' });
-    setIsAuthenticated(true);
+
+    try {
+      const authContract = await authService.login(email, password);
+      authHelper.setAuth(authContract.data);
+      console.log('Token', authHelper.token)
+      const userProfile = await userService.getProfile();
+      setCurrentUser(userProfile.data)
+      return true;
+    } catch (error) {
+      console.log(error)
+    }
+    return false;
+
   };
   const logout = () => {
     console.log('Logout is called');
-    setIsAuthenticated(false);
+    // setIsAuthenticated(false);
+    authHelper.removeAuth();
+    setCurrentUser(undefined);
   };
 
   useEffect(() => {
@@ -35,9 +55,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     console.log('Init Auth Context.')
     const validateUser = async () => {
       try {
-        console.log(didRequest.current)
         if (!didRequest.current) {
-          console.log('Will get and retrieve user data.');
+          if (authHelper.token) {
+            console.log('Will get and retrieve user data.');
+            const userProfile = await userService.getProfile();
+            setCurrentUser(userProfile.data)
+          }
+          setLoading(false);
         }
       } catch (error) {
         console.error(error);
@@ -46,6 +70,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
         console.log('Display error page');
       }
+
     };
 
     validateUser();
@@ -54,13 +79,20 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [setCurrentUser]);
 
-  return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+
+
+  if (loading) {
+    return <> <Spinner animation="border" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </Spinner></>
+  }
+  else {
+    return <AuthContext.Provider value={{ isAuthenticated, login, logout, currentUser }}>
       {children}
     </AuthContext.Provider>
-  );
+  }
 };
 
 export const useAuth = () => {

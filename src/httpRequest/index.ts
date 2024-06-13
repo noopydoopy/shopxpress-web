@@ -35,7 +35,7 @@ export class HttpRequest {
 
     this.axiosInstance.interceptors.request.use(
       (request: InternalAxiosRequestConfig) => {
-        const apiToken = authHelper.get();
+        const apiToken = authHelper.token;
         // Attach token for the request.
         if (request.headers && apiToken) {
           request.headers['Authorization'] = 'Bearer ' + apiToken;
@@ -55,6 +55,7 @@ export class HttpRequest {
         if (error.response?.status === 401) {
           // Remove token and redirect to login.
           console.log('Token is invalid or expired');
+          authHelper.removeAuth();
           window.location.href = '/login';
         } else if (error.response?.status === 204) {
         }

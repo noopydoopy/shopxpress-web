@@ -56,7 +56,7 @@ const CartPage: FC = () => {
                         <ListGroup variant="flush" color="white" className="gap-2">
                             {
                                 [1, 2, 3, 4, 5].map((p, i) =>
-                                    <ListGroup.Item action className="d-flex flex-wrap justify-content-between align-items-center flex-column flex-md-row" key={i}>
+                                    <ListGroup.Item as="div" action className="d-flex flex-wrap justify-content-between align-items-center flex-column flex-md-row" key={i}>
                                         <div>
                                             <Image src="" className="object-fit-contain" style={{ height: '6em' }} onError={e => {
                                                 const target = e.target as HTMLImageElement;

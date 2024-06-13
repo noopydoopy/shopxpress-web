@@ -1,4 +1,5 @@
 import AuthContract from "../contracts/AuthContract"
+import UserProfileContract from "../contracts/UserProfileContract";
 
 export enum LocalStorageKey {
     Token = 'token'
@@ -6,19 +7,26 @@ export enum LocalStorageKey {
 
 
 export class AuthHelper {
-    token: string | null
+    token: string | null;
+    user : UserProfileContract | null;
 
     constructor() {
         this.token = localStorage.getItem(LocalStorageKey.Token);
+        this.user = null;
     }
 
-    get() {
-        return localStorage.getItem(LocalStorageKey.Token);
+    setUser(user : UserProfileContract) {
+        this.user = user;
+    }
+
+    getUser() {
+        return this.user;
     }
 
     setAuth(auth: AuthContract) {
         if (auth) {
             localStorage.setItem(LocalStorageKey.Token, auth.token);
+            this.token = auth.token;
         }
     }
 

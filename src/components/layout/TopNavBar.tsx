@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 
 const TopNavBar: React.FC = () => {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, currentUser } = useAuth();
   const navigate = useNavigate();
 
   return (
@@ -32,7 +32,7 @@ const TopNavBar: React.FC = () => {
               </Button>
             </Nav.Link>
             {isAuthenticated ? (
-              <NavDropdown title='Login as XXX' id='basic-nav-dropdown'>
+              <NavDropdown title={`${currentUser?.firstName} ${currentUser?.lastName}`} id='basic-nav-dropdown'>
                 {/* <NavDropdown.Divider /> */}
                 <NavDropdown.Item
                   onClick={() => {
