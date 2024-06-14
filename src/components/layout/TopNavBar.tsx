@@ -9,7 +9,7 @@ import { useUserCartContext } from '../../context/UserCartContext';
 
 const TopNavBar: React.FC = () => {
   const { isAuthenticated, logout, currentUser } = useAuth();
-  const { itemInCart } = useUserCartContext();
+  const { itemInCart , setItemInCart} = useUserCartContext();
   const navigate = useNavigate();
 
   return (
@@ -39,6 +39,7 @@ const TopNavBar: React.FC = () => {
                 <NavDropdown.Item
                   onClick={() => {
                     logout();
+                    setItemInCart(0);
                   }}
                 >
                   Logout

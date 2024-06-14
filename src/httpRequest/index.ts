@@ -57,7 +57,7 @@ export class HttpRequest {
           // Remove token and redirect to login.
           console.log('Token is invalid or expired');
           authHelper.removeAuth();
-          window.location.href = '/login';
+          // window.location.href = '/login';
         } else if (error.response?.status === 204) {
         }
 

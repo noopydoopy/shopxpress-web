@@ -42,7 +42,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
   const logout = () => {
     console.log('Logout is called');
-    // setIsAuthenticated(false);
     authHelper.removeAuth();
     setCurrentUser(undefined);
   };
@@ -68,14 +67,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         if (!didRequest.current) {
           logout();
         }
-        console.log('Display error page');
+        console.log('Display error page', didRequest.current);
       }
 
     };
 
     validateUser();
     return () => {
-      didRequest.current = true
+      didRequest.current = true;
+      console.log('destroy didRequest')
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
