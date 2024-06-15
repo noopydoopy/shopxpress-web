@@ -24,8 +24,11 @@ export const UserCartProvider: FC<{ children: ReactNode }> = ({ children }) => {
         const fetchUserCart = async () => {
             await getUserCart();
         }
-        fetchUserCart();
-    }, [getUserCart])
+        if (isAuthenticated) {
+            fetchUserCart();
+        }
+
+    }, [getUserCart, isAuthenticated])
 
     return (
         <UserCartContext.Provider value={{ itemInCart, setItemInCart }}>

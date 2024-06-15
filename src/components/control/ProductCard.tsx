@@ -1,17 +1,18 @@
 import { FC } from "react";
-import { Card, Image } from "react-bootstrap";
+import { Badge, Card, Image } from "react-bootstrap";
 
 import emptyImage from '../../assets/images/emptyImage.png';
 import { Link } from "react-router-dom";
 
 interface IProductCardProps {
-    productName : string
-    description : string
-    productId : number
-    imageUrl : string
+    productName: string
+    description: string
+    productId: number
+    imageUrl: string
+    category: string
 }
 
-const ProductCard: FC<IProductCardProps> = ({productId, productName, description, imageUrl}) => {
+const ProductCard: FC<IProductCardProps> = ({ productId, productName, description, imageUrl, category }) => {
 
     return (
         <Card style={{ width: '18rem' }} className='bg-white'>
@@ -28,7 +29,8 @@ const ProductCard: FC<IProductCardProps> = ({productId, productName, description
                     {description}
                 </Card.Text>
             </Card.Body>
-            <Card.Body className='d-flex justify-content-end align-items-end'>
+            <Card.Body className='d-flex justify-content-between align-items-end'>
+                <Badge bg="success">{category}</Badge>
                 <Link className='btn btn-outline-primary' to={`/products/${productId}`}>View</Link>
             </Card.Body>
         </Card>

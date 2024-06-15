@@ -52,7 +52,8 @@ const HomePage = () => {
               topSellerProducts.map((p, i) => <ProductCard key={i} productId={p.productId}
                 description={p.description}
                 productName={p.name}
-                imageUrl={'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/iphone-card-40-iphone15prohero-202309_FMT_WHH?wid=508&hei=472&fmt=p-jpg&qlt=95&.v=1693086369818'} />
+                category={p.productCategoryName}
+                imageUrl={p.imageUrl} />
               )
             )
           }
@@ -69,7 +70,8 @@ const HomePage = () => {
               topNewProducts.map((p, i) => <ProductCard key={i} productId={p.productId}
                 description={p.description}
                 productName={p.name}
-                imageUrl={''} />
+                category={p.productCategoryName}
+                imageUrl={p.imageUrl} />
               )
             )
           }
