@@ -4,6 +4,7 @@ interface CartProductContract {
     productName: string;
     productDescription: string;
     productPrice : number;
+    productImageUrl : string;
 }
 
 export default CartProductContract;

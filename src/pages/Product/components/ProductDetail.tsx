@@ -87,7 +87,7 @@ const ProductDetail = () => {
                                 <Container>
                                     <Row className="mb-3">
                                         <Col xs="12" className="d-flex justify-content-center">
-                                            <Image src="" className="mx-auto" thumbnail onError={e => {
+                                            <Image src={product?.imageUrl} className="mx-auto" thumbnail onError={e => {
                                                 const target = e.target as HTMLImageElement;
                                                 target.src = emptyImage;
                                             }} />

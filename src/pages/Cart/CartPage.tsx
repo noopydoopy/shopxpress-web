@@ -106,7 +106,7 @@ const CartPage: FC = () => {
                                                     userCart.cartProducts.length > 0 ? userCart.cartProducts.map((p, i) =>
                                                         <ListGroup.Item as="div" action className="d-flex flex-wrap justify-content-between align-items-center flex-column flex-md-row" key={i}>
                                                             <div>
-                                                                <Image src="" className="object-fit-contain" style={{ height: '6em' }} onError={e => {
+                                                                <Image src={p.productImageUrl} className="object-fit-contain" style={{ height: '6em' }} onError={e => {
                                                                     const target = e.target as HTMLImageElement;
                                                                     target.src = emptyImage;
                                                                 }} />
